@@ -1,0 +1,9 @@
+torch
+transformers>=4.35.3
+accelerate
+pillow
+numpy
+scipy
+pandas
+statsmodels
+tqdm
