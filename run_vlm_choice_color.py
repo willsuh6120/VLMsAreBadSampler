@@ -79,10 +79,18 @@ def get_single_token_id(tokenizer, text: str) -> Tuple[int, str]:
     ids = tokenizer.encode(text, add_special_tokens=False)
     if len(ids) == 1:
         return ids[0], text
-    ids = tokenizer.encode(" " + text, add_special_tokens=False)
-    if len(ids) == 1:
-        return ids[0], " " + text
-    raise ValueError(f"Label '{text}' is not a single token for this tokenizer.")
+    ids_sp = tokenizer.encode(" " + text, add_special_tokens=False)
+    if len(ids_sp) == 1:
+        return ids_sp[0], " " + text
+    # Fallback: use the final token from the shortest encoding when labels are multi-token.
+    ids_best = ids if len(ids) <= len(ids_sp) else ids_sp
+    last_id = ids_best[-1]
+    decoded = tokenizer.decode([last_id])
+    if text in decoded:
+        return last_id, decoded
+    raise ValueError(
+        f"Label '{text}' is not a single token for this tokenizer and no fallback token was found."
+    )
 
 
 def parse_digit_color(text: str) -> Tuple[str, str]:
