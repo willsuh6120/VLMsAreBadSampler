@@ -95,3 +95,5 @@ Key fields:
 - `analyze_choice_only.py`, `analyze_choice_color.py`: aggregation and CSV summaries.
 - `run_local_debug_3090.sh`: small local debug run.
 - `run_poc_all_4gpu.sh`: full PoC on 4 GPUs.
+
+# VLMsAreBadSampler
