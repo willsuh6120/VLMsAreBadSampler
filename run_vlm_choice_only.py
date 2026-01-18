@@ -93,7 +93,7 @@ def next_token_probs_for_allowed(
     inputs = processor(text=[prompt], images=[image], return_tensors="pt", padding=True).to(device)
     out = model(**inputs)
     logits = out.logits[:, -1, :]
-    sub = logits[0, allowed_token_ids]
+    sub = logits[0, allowed_token_ids].float()
     probs = torch.softmax(sub, dim=-1).detach().cpu().numpy()
     return probs
 
